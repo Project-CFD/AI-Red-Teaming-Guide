@@ -9,6 +9,16 @@
 
 **A comprehensive guide to adversarial testing and security evaluation of AI systems, helping organizations identify vulnerabilities before attackers exploit them.**
 
+### Trusted by practitioners at
+
+![Microsoft](https://img.shields.io/badge/Microsoft-0078D4?style=for-the-badge&logo=microsoft&logoColor=white)
+![Google](https://img.shields.io/badge/Google-4285F4?style=for-the-badge&logo=google&logoColor=white)
+![Meta](https://img.shields.io/badge/Meta-0467DF?style=for-the-badge&logo=meta&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)
+![Anthropic](https://img.shields.io/badge/Anthropic-191919?style=for-the-badge&logo=anthropic&logoColor=white)
+
+<sub>Logos represent organizations where individual practitioners reference this guide; inclusion does not imply official endorsement.</sub>
+
 [Overview](#overview) • [Frameworks](#key-frameworks-and-standards) • [Methodologies](#ai-red-teaming-methodology) • [Tools](#red-teaming-tools) • [Case Studies](#real-world-case-studies) • [Resources](#resources-and-references)
 
 </div>
