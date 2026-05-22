@@ -2,6 +2,8 @@
   
 # 🎯 AI Red Teaming: The Complete Guide
 
+</div>
+
 <div align="center">
 
 ![AI Red Teaming](https://img.shields.io/badge/AI-Red%20Teaming-red?style=for-the-badge)
