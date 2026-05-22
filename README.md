@@ -27,6 +27,7 @@
 ![Cisco](https://img.shields.io/badge/Cisco-1BA0D7?style=for-the-badge&logo=cisco&logoColor=white)
 
 <sub>Logos represent organizations where individual practitioners reference this guide; inclusion does not imply official endorsement.</sub>
+
 [Overview](#overview) • [Frameworks](#key-frameworks-and-standards) • [Methodologies](#ai-red-teaming-methodology) • [Tools](#red-teaming-tools) • [Case Studies](#real-world-case-studies) • [Resources](#resources-and-references)
 
 </div>
