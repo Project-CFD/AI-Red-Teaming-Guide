@@ -1,4 +1,5 @@
 <div align="center">
+  
 # 🎯 AI Red Teaming: The Complete Guide
 
 <div align="center">
