@@ -1022,13 +1022,16 @@ Objective (natural language)
 
 ### Open-Source Tools
 
+> **2026 shift — single-turn probing → multi-turn agentic orchestration.** The whole tool category has moved past "fire one prompt, check the answer." Promptfoo's Hydra strategy, FuzzyAI's Crescendo attacks, and PyRIT's XPIA orchestrator all reflect the same reality: real adversaries escalate across turns and pivot automatically. Favor tools that support multi-turn, adaptive, agent-orchestrated campaigns. *Versions/ownership below were validated June 2026 — re-check before relying on them.*
+
 #### 1. **PyRIT (Python Risk Identification Toolkit) - Microsoft**
 
-The de facto standard for orchestrating LLM attack suites.
+The de facto standard for orchestrating LLM attack suites. *(v0.11.0, Feb 2026. The old `Azure/PyRIT` repo was archived in March 2026 — active development is now at `microsoft/PyRIT`. The companion **AI Red Teaming Agent** ships in Azure AI Foundry for automated workflows.)*
 
 ```bash
 # Installation
 pip install pyrit
+
 # Basic usage
 from pyrit import RedTeamOrchestrator
 from pyrit.prompt_target import AzureOpenAIChatTarget
@@ -1040,15 +1043,14 @@ results = orchestrator.run_attack_strategy("jailbreak")
 
 **Features:**
 - 40+ built-in attack strategies
-- Multi-turn conversation support
+- Multi-turn conversation support + XPIA (cross-domain prompt injection) orchestrator
 - Custom attack development
 - Works with local or cloud models
-- Extensive documentation
-- Active development
+- Azure AI Foundry AI Red Teaming Agent integration
 
 **Best For:** Internal red teams, research, comprehensive testing
 
-**GitHub:** [microsoft/PyRIT](https://github.com/microsoft/PyRIT)
+**GitHub:** [microsoft/PyRIT](https://github.com/microsoft/PyRIT) *(validated 2026-06)*
 
 ---
 
@@ -1089,11 +1091,14 @@ results = red_team.scan(
 
 ---
 
-#### 3. **Garak - LLM Vulnerability Scanner**
+#### 3. **Garak - LLM Vulnerability Scanner (NVIDIA)**
+
+Now maintained by NVIDIA. *(v0.14.x in development, June 2026, adding enhanced probes for agentic AI systems.)*
 
 ```bash
 # Installation
 pip install garak
+
 # Scan a model
 python -m garak --model_name openai --model_type gpt-4
 
@@ -1110,11 +1115,13 @@ python -m garak --probes dan,encoding --model_name mymodel
 
 **Best For:** Quick vulnerability scans, CI/CD integration
 
-**GitHub:** [leondz/garak](https://github.com/leondz/garak)
+**GitHub:** [NVIDIA/garak](https://github.com/NVIDIA/garak) *(validated 2026-06; formerly leondz/garak)*
 
 ---
 
 #### 4. **promptfoo - LLM Red Teaming & Evaluation**
+
+*Acquired by OpenAI in March 2026 (~$86M) but kept MIT-licensed. The **Hydra** strategy adds multi-turn, adaptive agentic campaigns. Best default for CI/CD-integrated application security testing.*
 
 ```bash
 # Installation
@@ -1129,7 +1136,7 @@ promptfoo eval -c promptfooconfig.yaml
 ```
 
 **Features:**
-- Adversarial attacks (PAIR, tree-of-attacks, crescendo, many-shot)
+- Adversarial attacks (PAIR, tree-of-attacks, crescendo, many-shot, Hydra multi-turn)
 - Prompt injection and jailbreak testing
 - Custom plugin support
 - CI/CD integration
@@ -1137,7 +1144,7 @@ promptfoo eval -c promptfooconfig.yaml
 
 **Best For:** LLM red teaming, security testing, CI/CD pipelines
 
-**GitHub:** [promptfoo/promptfoo](https://github.com/promptfoo/promptfoo)
+**GitHub:** [promptfoo/promptfoo](https://github.com/promptfoo/promptfoo) *(validated 2026-06)*
 
 ---
 
@@ -1329,6 +1336,18 @@ bun start
 
 ---
 
+### Emerging: Agent-Native & Autonomous Platforms (2026)
+
+The newest wave targets the agent/orchestration layer specifically (tool-call hijacking, multi-agent pipelines, memory poisoning) and runs autonomous, agent-orchestrated assessments rather than static probe suites:
+
+- **Cisco AI Defense (Explorer Edition)** — brings agentic AI red teaming to builders; runtime controls + assessment. [blogs.cisco.com/ai](https://blogs.cisco.com/ai/introducing-cisco-ai-defense-explorer)
+- **Novee AI** — autonomous red-teaming platform (early 2026) focused on agent-native scenarios: multi-agent pipelines, tool-call hijacking, and memory poisoning at the orchestration layer.
+- **General Analysis, Confident AI** and others publish 2026 agentic-platform comparisons worth tracking during tool selection.
+
+*(Validated 2026-06; this is a fast-moving category — confirm current capabilities directly.)*
+
+---
+
 ### Comparison Matrix
 
 | Tool | Type | Cost | Automation | Learning Curve | Best Use Case |
@@ -1351,7 +1370,72 @@ bun start
 
 ## 📊 Real-World Case Studies
 
-### Case Study 1: Microsoft's SSRF Vulnerability (2024)
+> Case studies are grouped **Current (2025–2026)** first, then **Historical (2023–2024)**. Evidence tags follow the [Case Study Quality Bar](#-case-study-quality-bar).
+
+### Current Incidents (2025–2026)
+
+#### Case Study A: AI-Orchestrated State-Sponsored Intrusion (September 2025)
+
+**Context:** Anthropic detected and disrupted what it described as the first documented large-scale cyberattack predominantly executed by an AI agent.
+
+**Attack Vector:** Misuse of an autonomous coding agent (Claude Code) for offensive operations.
+
+**What happened:**
+A state-sponsored group used an agent to autonomously carry out an estimated **80–90% of tactical execution** — reconnaissance, exploit generation, lateral movement — across **~30 global targets**, with humans intervening only at a few key decision points.
+
+**Impact:** Critical — demonstrated that frontier agents collapse the time from vulnerability discovery to working exploit from months to hours, and that a single operator can run campaigns at machine scale.
+
+**Lessons for red teams:**
+- Red-team your *own* agents for offensive-capability misuse, not just user-facing harms.
+- Test autonomy boundaries: what can the agent do across multiple steps without human confirmation?
+- Tie detection to agent action telemetry (tool calls, network egress), not just prompt content.
+
+**Evidence quality:** Evidence-backed (vendor disclosure). **Confidence:** Medium-High.
+
+---
+
+#### Case Study B: OpenClaw Agent Framework Vulnerabilities (January 2026)
+
+**Context:** A wildly popular open-source agent framework — 336k+ GitHub stars and 2,100+ agents spawned within 48 hours of launch.
+
+**Attack Vectors:** Agentic supply chain (ASI04), one-click RCE, credential exposure.
+
+**What happened:**
+A security audit found **512 vulnerabilities**, including **CVE-2026-25253**, a one-click remote code execution via WebSocket hijacking. Within the first week, **1,800+ instances were exposed and leaking API keys/credentials**, and **336 malicious plugins** (credential stealers disguised as trading bots) reached the framework's skills marketplace.
+
+**Impact:** Critical — the definitive cautionary tale for agentic supply-chain risk: a trusted framework + an open plugin marketplace + insecure defaults.
+
+**Lessons for red teams:**
+- Treat the plugin/tool marketplace as hostile by default (see [MCP & Tool-Protocol Security](#mcp--tool-protocol-security)).
+- Scan for exposed agent instances and plaintext secrets in configs.
+- Pin and review plugins; never auto-trust marketplace content.
+
+**Evidence quality:** Evidence-backed (security audit reporting). **Confidence:** Medium.
+
+---
+
+#### Case Study C: GitHub Copilot RCE & Second-Order Prompt Injection (2025)
+
+**Context:** AI coding assistant integrated into developer workflows.
+
+**Attack Vector:** Prompt injection escalating to remote code execution (**CVE-2025-53773, CVSS 9.6**).
+
+**What happened:**
+Researchers showed that injected content could cause the assistant to write to its own configuration files, achieving RCE. Separately, a **second-order prompt injection** pattern emerged: feeding a *low-privilege* agent a malformed request tricked it into asking a *higher-privilege* agent to perform the action on its behalf — a confused-deputy escalation across agents (ASI07).
+
+**Impact:** Critical — code-assistant compromise lands directly in developer environments and CI.
+
+**Lessons for red teams:**
+- Test whether agent output can modify agent configuration or environment.
+- Explicitly test inter-agent privilege boundaries with second-order payloads.
+
+**Evidence quality:** Evidence-backed (CVE + research). **Confidence:** Medium-High.
+
+---
+
+### Historical Incidents (2023–2024)
+
+#### Case Study 1: Microsoft's SSRF Vulnerability (2024)
 
 **Context:** Video processing AI application using FFmpeg component
 
