@@ -2,7 +2,30 @@
 
 All notable changes to this guide should be documented in this file.
 
-## [Unreleased]
+## [2026-06-10] - Agentic-era refresh
+### Added
+- **New attack-surface sections** in README:
+  - MCP & Tool-Protocol Security (tool/schema poisoning, server compromise, credential theft, namespace collisions)
+  - Computer-Use & Browser Agent Attacks (visual hijacking, OCR spoofing, pixel adversarial inputs)
+  - RAG Attack Taxonomy (source poisoning, retrieval manipulation, citation spoofing, context exhaustion)
+  - Voice, Audio & Multimodal Attacks (speaker cloning, audio adversarial, ultrasonic, cross-modal)
+  - Fine-Tuning & Model Supply-Chain Security (backdoors, malicious LoRA, poisoned checkpoints)
+  - AI-on-AI Red Teaming (agent-orchestrated assessment, judge-model pitfalls)
+  - AI Incident Response (agent containment, escalation logic, EU serious-incident reporting)
+- **Frameworks**: OWASP Top 10 for Agentic Applications 2026 (ASI01–ASI10) and Microsoft Agentic Failure-Mode Taxonomy v2.0.
+- **Three new agentic attack trees**: Goal Hijack, Agentic Supply Chain Compromise, Rogue Agents; all trees tagged with OWASP ASI IDs.
+- **Runnable Evaluation Harness**: YAML policy, Python scorer, and release-gate runner replacing prior pseudocode.
+- **Three current case studies** (2025–2026): AI-orchestrated state intrusion, OpenClaw framework, GitHub Copilot RCE; older cases regrouped as Historical.
+- **EU AI Act enforcement mapping**: GPAI systemic-risk obligations (Aug 2 2026), Article→evidence table.
+- Filled examples added to vulnerability-report, test-case-library, and threat-modeling-workshop templates; agentic checks added to the PR checklist.
+
+### Changed
+- Tools section updated for 2026 (PyRIT v0.11/repo move, Garak→NVIDIA v0.14, promptfoo→OpenAI acquisition, multi-turn orchestration shift, validation dates).
+- 2025–2026 incident list and industry-impact statistics in "Why It Matters".
+- Update Watchlist re-validated to 2026-06-10 with NIST Cyber AI Profile, COSAiS overlays, and critical-infrastructure profile.
+- Badge and freshness messaging updated to June 2026; removed stale `--break-system-packages` pip guidance.
+
+## [2026-02] - Source governance refresh
 ### Added
 - README refresh for 2026 source governance:
   - Updated freshness messaging and badge to 2026
