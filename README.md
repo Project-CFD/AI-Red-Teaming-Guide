@@ -2647,7 +2647,7 @@ Recommends adversarial testing before deployment and continuous monitoring in pr
 - [GenAI Red Teaming Guide](https://genai.owasp.org/)
 - [LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 - [AI Security & Privacy Guide](https://owasp.org/www-project-ai-security-and-privacy-guide/)
-- [Top 10 for Agentic Applications](https://genai.owasp.org/2025/12/09/owasp-top-10-for-agentic-applications-the-benchmark-for-agentic-security-in-the-age-of-autonomous-ai/)
+- [Top 10 for Agentic Applications 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
 
 **MITRE:**
 - [ATLAS Framework](https://atlas.mitre.org/)
@@ -2686,11 +2686,27 @@ Recommends adversarial testing before deployment and continuous monitoring in pr
 
 ---
 
+### 2026 Threat-Landscape Sources
+
+These back the 2025–2026 incidents, statistics, and framework updates added in the June 2026 refresh. Vendor/researcher-reported figures are directional, not audited.
+
+- [Microsoft — Updating the taxonomy of failure modes in agentic AI (June 2026)](https://www.microsoft.com/en-us/security/blog/2026/06/04/updating-taxonomy-failure-modes-agentic-ai-systems-year-red-teaming-taught-us/)
+- [OWASP Top 10 for Agentic Applications 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
+- [EU — Guidelines for providers of general-purpose AI models](https://digital-strategy.ec.europa.eu/en/policies/guidelines-gpai-providers)
+- [NIST — Cyber AI Profile (IR 8596 draft)](https://csrc.nist.gov/pubs/ir/8596/iprd) · [NIST aims for summer 2026 release (Nextgov)](https://www.nextgov.com/artificial-intelligence/2026/05/nist-aims-summer-release-ai-cyber-guidelines/413559/)
+- [Adversa AI — Top AI Security Incidents of 2025](https://adversa.ai/blog/adversa-ai-unveils-explosive-2025-ai-security-incidents-report-revealing-how-generative-and-agentic-ai-are-already-under-attack/) · [CSO Online — Top 5 real-world AI security threats of 2025](https://www.csoonline.com/article/4111384/top-5-real-world-ai-security-threats-revealed-in-2025.html)
+- [Securiti — The Anthropic exploit: era of AI agent attacks](https://securiti.ai/blog/anthropic-exploit-era-of-ai-agent-attacks/)
+- [Agentic AI red teaming reveals zero-click HITL bypass chains](https://cybersecuritynews.com/agentic-ai-red-teaming-reveals-zero-click/)
+- [Help Net Security — AI red-teaming agents change how LLMs get tested](https://www.helpnetsecurity.com/2026/05/21/ai-red-teaming-agents-research/) · [2026 tool landscape (Garak/PyRIT/Promptfoo)](https://netguardia.com/security-operations/software-tools/the-best-ai-red-teaming-tools-of-2026-from-garak-to-promptfoo/)
+- [Cisco AI Defense: Explorer Edition (agentic red teaming)](https://blogs.cisco.com/ai/introducing-cisco-ai-defense-explorer)
+
+---
+
 ### Tools and Platforms
 
 **Open-Source:**
 - [PyRIT](https://github.com/microsoft/PyRIT) - Microsoft's toolkit
-- [Garak](https://github.com/leondz/garak) - LLM vulnerability scanner
+- [Garak](https://github.com/NVIDIA/garak) - LLM vulnerability scanner (NVIDIA)
 - [DeepEval](https://github.com/confident-ai/deepeval) - Testing framework
 - [ART](https://github.com/Trusted-AI/adversarial-robustness-toolbox) - IBM's toolkit
 - [Giskard](https://github.com/Giskard-AI/giskard) - AI testing platform
@@ -2881,7 +2897,7 @@ Unauthorized testing of AI systems may be illegal and unethical. Always obtain e
 
 ### 🎯 Remember: Responsible red teaming makes AI safer for everyone 🎯
 
-**Last Updated**: February 2026
+**Last Updated**: June 2026
 
 **Star this repository to stay updated with the latest AI red teaming practices!**
 
