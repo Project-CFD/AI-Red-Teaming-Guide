@@ -21,6 +21,7 @@ All notable changes to this guide should be documented in this file.
 
 ### Changed
 - Tools section updated for 2026 (PyRIT v0.11/repo move, Garak→NVIDIA v0.14, promptfoo→OpenAI acquisition, multi-turn orchestration shift, validation dates).
+- Added **Redamon** (samugit83) to the open-source tools list and comparison matrix; credited @samugit83 in a new Contributors subsection.
 - 2025–2026 incident list and industry-impact statistics in "Why It Matters".
 - Update Watchlist re-validated to 2026-06-10 with NIST Cyber AI Profile, COSAiS overlays, and critical-infrastructure profile.
 - Badge and freshness messaging updated to June 2026; removed stale `--break-system-packages` pip guidance.
