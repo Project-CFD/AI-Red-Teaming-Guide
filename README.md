@@ -1302,6 +1302,38 @@ bun start
 
 ---
 
+#### 9. **Redamon - samugit83**
+
+Autonomous AI red-team framework that runs the full offensive pipeline — reconnaissance, exploitation, post-exploitation, vulnerability triage, and automated code remediation (with GitHub PRs) — under a LangGraph-based agent orchestrator. A practical embodiment of the [AI-on-AI red teaming](#ai-on-ai-red-teaming) shift covered earlier.
+
+```bash
+# Installation
+git clone https://github.com/samugit83/redamon.git
+cd redamon
+./redamon.sh install
+
+# Web UI: http://localhost:3000
+# Full deployment with GVM vulnerability scanning:
+./redamon.sh install --gvm
+```
+
+**Features:**
+- Recon pipeline with 40+ integrated tools across 6 phases (subdomains, ports, HTTP, enum, vuln detect)
+- LangGraph ReAct agent orchestrator with 14+ security tools exposed via MCP servers
+- Neo4j-backed attack surface graph (17 node types) for findings and relationships
+- **CypherFix**: automated remediation that triages findings and opens GitHub PRs with code fixes
+- **AI Gauntlet**: offensive LLM/AI testing built on Garak, PyRIT, Giskard, and promptfoo
+- **Fireteam**: parallel specialist sub-agents for concurrent investigation angles
+- 500+ project settings via web UI; supports OpenAI, Anthropic, OpenRouter, AWS Bedrock, Ollama, vLLM
+
+**Best For:** End-to-end autonomous red-team operations, multi-phase agentic assessment, MCP-driven tool orchestration
+
+**License:** MIT
+
+**GitHub:** [samugit83/redamon](https://github.com/samugit83/redamon) *(validated 2026-06)*
+
+---
+
 ### Commercial Platforms
 
 #### 1. **Mindgard**
@@ -1377,6 +1409,7 @@ The newest wave targets the agent/orchestration layer specifically (tool-call hi
 | **ART** | Open | Free | Medium | High | Classical ML attacks |
 | **Giskard** | Open | Free | High | Medium | Multi-turn attacks |
 | **Gideon** | Open | Free | High | Medium | Defensive threat intel |
+| **Redamon** | Open | Free | Very High | Medium | Autonomous end-to-end red team |
 | **Mindgard** | Commercial | $$$ | Very High | Low | Enterprise compliance |
 | **Lakera** | Commercial | $$$ | High | Low | Production protection |
 | **Pillar** | Service | $$$$ | Custom | N/A | Full-service testing |
@@ -2730,6 +2763,7 @@ These back the 2025–2026 incidents, statistics, and framework updates added in
 - [ART](https://github.com/Trusted-AI/adversarial-robustness-toolbox) - IBM's toolkit
 - [Giskard](https://github.com/Giskard-AI/giskard) - AI testing platform
 - [Gideon](https://github.com/Cogensec/Gideon) - Autonomous defensive security assistant
+- [Redamon](https://github.com/samugit83/redamon) - Autonomous AI red-team framework (recon → exploit → triage → auto-remediation)
 
 **Commercial:**
 - [Mindgard](https://mindgard.ai/)
@@ -2884,6 +2918,10 @@ This guide draws from research and best practices established by:
 - **Cloud Security Alliance** - For Agentic AI guidance
 - **Anthropic** - For ethical AI safety research
 - **Academic Researchers** - For advancing adversarial ML science
+
+### Contributors
+
+- [@samugit83](https://github.com/samugit83) — Redamon, autonomous AI red-team framework
 
 ---
 
