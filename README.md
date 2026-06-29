@@ -4,6 +4,10 @@
 
 </div>
 
+> ### 🌐 Join the Global Red Teaming Network
+> Connect with AI red teamers worldwide, share findings, and collaborate on adversarial testing through **Cogensec**.
+> **→ [Join the network](https://cogensec.com/redteam-network)**
+
 <div align="center">
 
 ![AI Red Teaming](https://img.shields.io/badge/AI-Red%20Teaming-red?style=for-the-badge)
@@ -2821,6 +2825,8 @@ These back the 2025–2026 incidents, statistics, and framework updates added in
 ## 🤝 Contributing
 
 We welcome contributions from the community to keep this guide comprehensive and up-to-date!
+
+> 🌐 **Beyond this repo:** join the [Cogensec Global Red Teaming Network](https://cogensec.com/redteam-network) to collaborate with practitioners worldwide.
 
 ### How to Contribute
 
