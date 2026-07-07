@@ -1382,12 +1382,12 @@ cd redamon
 - Custom testing programs
 - **Website:** [neuraltrust.ai](https://neuraltrust.ai)
 
-#### 7. **Pallma AI**
+#### 7. **Verno Labs**
 - Continuous automated AI red teaming
 - Real-time AI agent protection
 - AI purple teaming
 - Voice AI security protection
-- **Website:** [pallma.ai](https://pallma.ai)
+- **Website:** [vernolabs.ai](https://vernolabs.ai)
 
 ---
 
@@ -1418,7 +1418,7 @@ The newest wave targets the agent/orchestration layer specifically (tool-call hi
 | **Lakera** | Commercial | $$$ | High | Low | Production protection |
 | **Pillar** | Service | $$$$ | Custom | N/A | Full-service testing |
 | **NeuralTrust** | Service | $$$ | Custom | N/A | Full-service testing |
-| **Pallma AI** | Service | $$$ | Very High | Low | Full-service testing |
+| **Verno Labs** | Service | $$$ | Very High | Low | Full-service testing |
 
 ---
 
