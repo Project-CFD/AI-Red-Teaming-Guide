@@ -139,7 +139,7 @@ AI red teaming adapts military and cybersecurity red team concepts to the unique
 Recent security incidents demonstrate that AI systems face unique challenges traditional cybersecurity cannot address:
 
 **2025–2026 Security Incidents:**
-- **January 2026**: The OpenClaw agent framework shipped with 512 vulnerabilities, including a one-click remote code execution flaw (CVE-2026-25253); within a week 1,800+ instances were exposed leaking API keys, and 336 malicious plugins (credential stealers disguised as trading bots) reached its skills marketplace.
+- **January 2026**: The OpenClaw agent framework was reported to ship with a large batch of vulnerabilities, including a critical one-click remote code execution flaw; within weeks thousands of instances were exposed leaking API keys, and malicious plugins (credential stealers disguised as trading bots) reached its skills marketplace.
 - **September 2025**: Anthropic detected and disrupted the first documented large-scale cyberattack predominantly executed by an AI agent — a state-sponsored operation in which Claude Code autonomously handled an estimated 80–90% of tactical execution across ~30 global targets.
 - **August 2025**: GitHub Copilot remote code execution (CVE-2025-53773, CVSS 9.6) via prompt injection that wrote to the agent's configuration files.
 - **2025**: Prompt-injection research demonstrated against AI-enabled browsers (Perplexity's Comet, Gemini for Chrome) and coding assistants (GitLab Duo, Copilot Chat).
@@ -228,6 +228,8 @@ The OWASP Gen AI Red Teaming Guide provides a practical approach to evaluating L
 - Cross-functional collaboration guidance
 
 **Access the Guide**: [genai.owasp.org](https://genai.owasp.org/)
+
+**OWASP Top 10 for LLM Applications (2025):** the LLM-application list was refreshed in the 2025 edition, which added two categories worth explicit red-team coverage: **System Prompt Leakage** (system prompts inadvertently exposing secrets or exploitable instructions) and **Vector & Embedding Weaknesses** (RAG/vector-store risks — embedding poisoning, similarity attacks, and embedding inversion). The edition also renamed "Overreliance" to **Misinformation**, broadened "Model DoS" to **Unbounded Consumption**, and expanded **Excessive Agency**. For single-prompt LLM apps, test against the LLM Top 10 (2025); for tool-using agents, use the Agentic Top 10 (2026) below.
 
 ---
 
@@ -624,6 +626,8 @@ For each vulnerability:
 
 ## ⚔️ Attack Vectors and Techniques
 
+> ⚖️ **Authorized use only.** The techniques and payloads in this section are for defensive testing of systems you **own or are explicitly authorized in writing to test**. Running them against third-party systems, production services handling real user data, or any target outside an agreed scope may be illegal and can cause real harm. Establish scope and permission first — see the Rules of Engagement template in [`templates/`](./templates/) and [Establish Clear Rules of Engagement](#6-establish-clear-rules-of-engagement).
+
 ### 1. Prompt-Based Attacks
 
 #### Prompt Injection
@@ -731,6 +735,8 @@ Result: Backdoor triggers on specific inputs
 **Goal**: Steal proprietary AI models through API queries
 
 **Techniques:**
+
+> ⚖️ Reminder: run extraction campaigns only against models you own or are authorized to test — high-volume query campaigns against third-party APIs typically violate their terms of service and may be unlawful.
 
 1. **Query-Based Extraction**
 ```python
@@ -931,7 +937,7 @@ A man-in-the-middle (or a malicious orchestrator) rewrites tool arguments or ret
 - **Controls:** Authenticate and integrity-check tool channels (mTLS); label tool output as data, never instructions; quarantine tool responses through output policy.
 
 ### Attack 4: Credential Theft via MCP Config
-MCP server configs commonly hold API keys and tokens. Exposed instances leak them (as the OpenClaw incident showed — 1,800+ instances leaking keys in a week).
+MCP server configs commonly hold API keys and tokens. Exposed instances leak them (as the OpenClaw incident showed — thousands of instances leaking keys within weeks).
 - **Test:** Scan for exposed MCP endpoints, world-readable config, and secrets passed as plaintext env/args; attempt to coerce a tool into echoing its own credentials.
 - **Controls:** Short-lived scoped tokens per tool/action; secret managers, not config files; never expose MCP servers to untrusted networks.
 
@@ -1144,7 +1150,7 @@ python -m garak --probes dan,encoding --model_name mymodel
 
 #### 4. **promptfoo - LLM Red Teaming & Evaluation**
 
-*Acquired by OpenAI in March 2026 (~$86M) but kept MIT-licensed. The **Hydra** strategy adds multi-turn, adaptive agentic campaigns. Best default for CI/CD-integrated application security testing.*
+*MIT-licensed. The **Hydra** strategy adds multi-turn, adaptive agentic campaigns. Best default for CI/CD-integrated application security testing.*
 
 ```bash
 # Installation
@@ -1198,7 +1204,7 @@ adversarial_images = attack.generate(x=test_images)
 
 ---
 
-#### 5. **Giskard - AI Testing Platform**
+#### 6. **Giskard - AI Testing Platform**
 
 Advanced automated red-teaming platform for LLM agents including chatbots, RAG pipelines, and virtual assistants.
 
@@ -1228,7 +1234,7 @@ results = test_suite.run(model)
 
 ---
 
-#### 6. **BrokenHill - Automatic Jailbreak Generator**
+#### 7. **BrokenHill - Automatic Jailbreak Generator**
 
 ```bash
 # Installation
@@ -1249,7 +1255,7 @@ python brokenhill.py --target gpt-4 --objective "harmful_content"
 
 ---
 
-#### 7. **Counterfit - Microsoft**
+#### 8. **Counterfit - Microsoft**
 
 ```bash
 # Installation
@@ -1272,7 +1278,7 @@ counterfit
 
 ---
 
-#### 8. **Gideon - Cogensec**
+#### 9. **Gideon - Cogensec**
 
 AI-powered autonomous cybersecurity operations assistant focused on defensive security research, threat intelligence, and hardening policy generation.
 
@@ -1306,7 +1312,7 @@ bun start
 
 ---
 
-#### 9. **Redamon - samugit83**
+#### 10. **Redamon - samugit83**
 
 Autonomous AI red-team framework that runs the full offensive pipeline — reconnaissance, exploitation, post-exploitation, vulnerability triage, and automated code remediation (with GitHub PRs) — under a LangGraph-based agent orchestrator. A practical embodiment of the [AI-on-AI red teaming](#ai-on-ai-red-teaming) shift covered earlier.
 
@@ -1335,6 +1341,58 @@ cd redamon
 **License:** MIT
 
 **GitHub:** [samugit83/redamon](https://github.com/samugit83/redamon) *(validated 2026-06)*
+
+---
+
+#### 11. **AI-Infra-Guard - Tencent Zhuque Lab**
+
+Full-stack AI red teaming platform that unifies several scanners: OpenClaw/agent security scanning, MCP-server and skills scanning, AI-infrastructure fingerprinting (100+ components matched against 1,600+ known vulnerabilities), and LLM jailbreak evaluation. Web UI and REST API, Docker-based deployment. A strong fit for the agentic/MCP attack surface covered throughout this guide.
+
+```bash
+# Installation (Docker)
+git clone https://github.com/Tencent/AI-Infra-Guard.git
+cd AI-Infra-Guard
+docker-compose -f docker-compose.images.yml up -d
+# Web interface: http://localhost:8088
+```
+
+**Features:**
+- MCP-server and agent-skills scanning across common risk categories
+- AI-infrastructure fingerprinting (Ollama, vLLM, ComfyUI, Triton, n8n, etc.) with CVE matching
+- Multi-agent workflow security evaluation (Dify, Coze)
+- LLM jailbreak robustness testing with curated datasets
+- Real-time web UI + REST API (Swagger)
+
+**Best For:** Infrastructure and agent/MCP security assessment, self-hosted scanning
+
+**License:** Apache-2.0
+
+**GitHub:** [Tencent/AI-Infra-Guard](https://github.com/Tencent/AI-Infra-Guard) *(unvalidated — confirm before relying on details)*
+
+---
+
+#### 12. **Humanbound**
+
+Open-source AI-agent red-team engine, SDK, and CLI focused on autonomous/agentic systems. Produces a security posture score (0–100, A–F grades) and HTML reports, and can generate guardrail rules for runtime protection. Runs fully offline via Ollama for air-gapped testing, or against hosted providers.
+
+```bash
+# Installation
+pip install humanbound            # core CLI + SDK
+pip install humanbound[engine]    # add LLM providers
+pip install humanbound[firewall]  # add firewall runtime
+```
+
+**Features:**
+- CLI and Python SDK over the same engine
+- Posture scoring (0–100 / A–F) with HTML reports
+- Offline/air-gapped testing via Ollama; also OpenAI, Anthropic, Gemini
+- Optional guardrail-rule generation for runtime defense
+
+**Best For:** Developer/DevSecOps testing of agentic systems, air-gapped assessments
+
+**License:** Apache-2.0
+
+**GitHub:** [humanbound/humanbound](https://github.com/humanbound/humanbound) *(unvalidated — confirm before relying on details)*
 
 ---
 
@@ -1414,6 +1472,8 @@ The newest wave targets the agent/orchestration layer specifically (tool-call hi
 | **Giskard** | Open | Free | High | Medium | Multi-turn attacks |
 | **Gideon** | Open | Free | High | Medium | Defensive threat intel |
 | **Redamon** | Open | Free | Very High | Medium | Autonomous end-to-end red team |
+| **AI-Infra-Guard** | Open | Free | High | Low | Infra/agent/MCP scanning |
+| **Humanbound** | Open | Free | High | Low | Agentic system testing |
 | **Mindgard** | Commercial | $$$ | Very High | Low | Enterprise compliance |
 | **Lakera** | Commercial | $$$ | High | Low | Production protection |
 | **Pillar** | Service | $$$$ | Custom | N/A | Full-service testing |
@@ -1452,14 +1512,14 @@ A state-sponsored group used an agent to autonomously carry out an estimated **8
 
 #### Case Study B: OpenClaw Agent Framework Vulnerabilities (January 2026)
 
-**Context:** A wildly popular open-source agent framework — 336k+ GitHub stars and 2,100+ agents spawned within 48 hours of launch.
+**Context:** A rapidly-adopted open-source agent framework that reached hundreds of thousands of GitHub stars and spawned thousands of agents within days of launch.
 
 **Attack Vectors:** Agentic supply chain (ASI04), one-click RCE, credential exposure.
 
 **What happened:**
-A security audit found **512 vulnerabilities**, including **CVE-2026-25253**, a one-click remote code execution via WebSocket hijacking. Within the first week, **1,800+ instances were exposed and leaking API keys/credentials**, and **336 malicious plugins** (credential stealers disguised as trading bots) reached the framework's skills marketplace.
+Security researchers reported a large batch of vulnerabilities — including a critical one-click remote code execution via WebSocket hijacking. Within the first weeks, thousands of publicly-reachable instances were found exposing API keys/credentials, and malicious plugins (credential stealers disguised as trading bots) reached the framework's skills marketplace.
 
-**Impact:** Critical — the definitive cautionary tale for agentic supply-chain risk: a trusted framework + an open plugin marketplace + insecure defaults.
+**Impact:** Critical — a cautionary tale for agentic supply-chain risk: a trusted framework + an open plugin marketplace + insecure defaults.
 
 **Lessons for red teams:**
 - Treat the plugin/tool marketplace as hostile by default (see [MCP & Tool-Protocol Security](#mcp--tool-protocol-security)).
@@ -2166,7 +2226,11 @@ security-evals/
 
 ### Minimal Working Implementation
 
-The pieces below are intentionally small and dependency-light so a team can copy them into `security-evals/` and run on day one.
+> ⚠️ **Illustrative reference code — NOT production-ready.** The snippets below are teaching scaffolding, not a drop-in harness. `call_model` / `my_app` are placeholders you must wire to your own target. The refusal and PII checks are deliberately naive: `REFUSAL_MARKERS` is an English-only keyword list that both misses politely/formally phrased refusals and false-positives on benign text containing "cannot," and `PII_PATTERNS` matches only email- and US-SSN-shaped strings (no names, phone numbers, passports, or medical IDs). Treat the reported ASR as directional only. For production, replace these heuristics with a calibrated judge model (see [AI-on-AI Red Teaming](#ai-on-ai-red-teaming)) and report the judge's own false-positive/negative rate.
+>
+> 🔒 **Run only against a sandboxed, non-production target. Never pass real user data through evaluation inputs** — several probes below deliberately elicit PII, and running them against a live system with real user context in scope could itself cause a privacy incident.
+
+The pieces below are intentionally small and dependency-light so a team can adapt them into `security-evals/`.
 
 **`policies/expected_outcomes.yaml`** — declare test cases and the policy each must satisfy:
 ```yaml
@@ -2768,6 +2832,8 @@ These back the 2025–2026 incidents, statistics, and framework updates added in
 - [Giskard](https://github.com/Giskard-AI/giskard) - AI testing platform
 - [Gideon](https://github.com/Cogensec/Gideon) - Autonomous defensive security assistant
 - [Redamon](https://github.com/samugit83/redamon) - Autonomous AI red-team framework (recon → exploit → triage → auto-remediation)
+- [AI-Infra-Guard](https://github.com/Tencent/AI-Infra-Guard) - Full-stack AI/MCP/agent security scanner (Tencent)
+- [Humanbound](https://github.com/humanbound/humanbound) - AI-agent red-team engine, SDK, and CLI
 
 **Commercial:**
 - [Mindgard](https://mindgard.ai/)
