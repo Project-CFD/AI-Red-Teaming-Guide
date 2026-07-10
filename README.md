@@ -203,8 +203,11 @@ Prioritize and respond to identified risks
 **Key NIST Resources:**
 - **AI RMF (NIST AI 100-1)**: Core framework
 - **GenAI Profile (NIST AI 600-1)**: Generative AI-specific guidance
+- **Adversarial ML Taxonomy (NIST AI 100-2e2025)**: the standard vocabulary for attacks and mitigations across the ML lifecycle — use it to label findings consistently
 - **Secure Software Development (NIST SP 800-218A)**: Development practices
 - **Dioptra Testbed**: Open-source AI security testing platform
+
+**CAISI AI Agent Standards Initiative (2026):** NIST's Center for AI Standards and Innovation launched a three-pillar program (agent **security**, **interoperability**, **identity**) on **Feb 17, 2026**, and open-sourced [AgentDojo-Inspect](https://github.com/usnistgov/agentdojo-inspect) for agent-hijacking evaluation. Its headline red-team result — novel attacks reaching an **81% task-hijack rate** vs 11% for prior baselines — is a useful reminder that agent evaluations must evolve continuously.
 
 ---
 
@@ -904,6 +907,19 @@ Scenario: Multiple AI agents cooperating
 Attack: Compromise one agent to attack others
 Example: Second-order prompt injection — feed a low-privilege agent a malformed
 request so it asks a higher-privilege agent to perform the action on its behalf
+```
+
+**Self-Replicating Prompt Malware / AI Worms (ASI08):**
+```
+Scenario: Interconnected agents that read and generate content for each other
+          (e.g., email/assistant agents with RAG memory)
+Attack: A prompt payload that both executes AND copies itself into outputs the
+        next agent will ingest — propagating across the mesh without a human
+Example: The "Morris II" research worm — a self-replicating prompt that spreads
+         through GenAI-powered email assistants, exfiltrating data as it goes
+Test: Can a single injected artifact cause downstream agents to reproduce and
+      forward the payload? Cap blast radius with output sanitization and
+      provenance checks between agents.
 ```
 
 > Tool-protocol (MCP) abuse, computer-use/visual attacks, RAG-borne injection, and fine-tuning backdoors are large enough surfaces to warrant their own sections — see the five that follow.
@@ -2319,6 +2335,20 @@ if __name__ == "__main__":
 
 > Wire `run_eval.py` into the [shift-left CI example](#2-embrace-the-shift-left-approach) so the gate runs on every PR.
 
+### Standard Benchmarks & Leaderboards
+
+Before rolling your own, anchor your program to the community benchmarks — they give reproducible, comparable numbers and cover the agentic attack surface the custom harness above does not:
+
+| Benchmark | What it measures | Notes |
+|-----------|------------------|-------|
+| **AgentDojo** | Indirect prompt injection against tool-calling agents | 97 realistic tasks + 629 security test cases across 70 tools / 27 injection targets; four environments (Workspace, Travel, Slack, Banking). Built by ETH Zurich. |
+| **AgentDojo-Inspect** | AgentDojo ported to the Inspect eval framework | NIST/CAISI fork used in its own agent-hijacking research (novel attacks hit an **81% task-hijack rate** vs 11% for prior baselines). [usnistgov/agentdojo-inspect](https://github.com/usnistgov/agentdojo-inspect) |
+| **AgentHarm** | Whether agents comply with overtly malicious tasks | 110 base tasks (440 augmented) across 11 harm categories / 104 tools; leading models are "surprisingly compliant" even without jailbreaks. |
+| **SHADE-Arena** | Sabotage/monitoring evasion | Tests whether an agent can pursue a hidden secondary objective while evading an overseer. |
+| **ART (Agent Red Teaming) benchmark** | Broad adversarial robustness | ~4,700 high-impact prompts targeting 44 policy-violating behaviors, with an evolving public leaderboard. |
+
+> Treat these as coverage floors, not ceilings — NIST's own finding is that relying entirely on existing tooling gives a false sense of assurance. Pair benchmark scores with novel, target-specific attacks.
+
 ---
 
 <a id="agentic-ai-attack-trees--controls-mapping"></a>
@@ -2348,6 +2378,8 @@ Use attack trees to connect offensive testing paths to defensive controls. Each 
 - Preventive: memory write policies, source trust labels, TTL for memory items
 - Detective: memory integrity diffs, unusual memory mutation alerts
 - Corrective: memory quarantine/reset, retrospective impact analysis
+
+> **What the research shows (why this tree is high-priority):** poisoning is cheaper than intuition suggests. A 2025 Anthropic / UK AI Security Institute / Alan Turing Institute study found that **~250 malicious documents can backdoor an LLM regardless of model size** (0.00016% of training tokens for a 13B model) — the number of poisoned samples is near-constant, not proportional. At inference time, **PoisonedRAG** showed as few as **5 poisoned documents** can subvert a RAG workflow with >90% reliability, and **MINJA** demonstrated memory-injection success rates above 95% purely through normal agent interaction. Assume the barrier to entry is low and test accordingly.
 
 ### Attack Tree C: Inter-Agent Privilege Escalation *(ASI07, ASI03)*
 1. Compromise low-privilege agent with prompt injection
@@ -2676,6 +2708,17 @@ Defines AI red teaming as "a structured testing effort to find flaws and vulnera
 - Ongoing monitoring
 - Incident reporting
 
+> Note: federal AI policy shifted after 2023 (the original order was rescinded and replaced by later executive actions). The durable US signal is now at the **state** level plus sector regulators — track those below rather than any single executive order.
+
+#### State AI Laws (2026)
+With no comprehensive federal statute, US obligations are increasingly set by states — 45 states introduced 1,500+ AI bills in the 2025–26 sessions. The ones most relevant to security testing:
+
+- **California — SB 53 (Transparency in Frontier AI Act):** developers of large frontier models (>10²⁶ FLOPs training compute) must publish a risk/safety framework, report critical safety incidents, and get whistleblower protections. Pairs with **AB 2013** (generative-AI training-data transparency). Both effective **Jan 1, 2026**.
+- **Texas — Responsible AI Governance Act (TRAIGA):** effective **Jan 1, 2026**; focuses on government use and bans manipulative/discriminatory uses, with lighter private-sector obligations.
+- **Colorado — SB 24-205 (Colorado AI Act):** the original high-risk-AI law was **delayed, then enforcement was paused by a federal court, and it was superseded by SB 26-189 (signed May 2026), now effective Jan 1, 2027.** Watch this one — the substance is still shifting.
+
+**Why it matters for red teams:** "frontier" transparency and critical-incident-reporting duties assume you can *produce evidence* — documented adversarial testing, incident timelines, and residual-risk records. The templates in this guide map directly to those obligations.
+
 ---
 
 ### European Union
@@ -2725,6 +2768,12 @@ Focuses on management of risk in AI systems, providing international standards f
 - Red teaming methodologies
 - Risk management frameworks
 - Documentation requirements
+
+#### ISO/IEC 42001:2023 — AI Management System (AIMS)
+The first certifiable AI management-system standard (the "ISO 27001 for AI"). It requires organizations to operate a risk-based lifecycle with impact assessments, controls, and continual improvement — red-team findings and remediation evidence are a natural fit for its Annex A controls and management review. In 2026 it is increasingly the certification enterprises and procurement teams ask for, and red-teaming platforms now map results to it alongside NIST AI RMF, OWASP, and the EU AI Act.
+
+#### ISO/IEC 42005:2025 — AI System Impact Assessment
+Provides a structured process for documenting AI system impacts (including safety/security harms). Use it to frame *what could go wrong and to whom* before scoping a red-team engagement, and to record residual risk after remediation.
 
 ---
 
