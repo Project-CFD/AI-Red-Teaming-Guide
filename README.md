@@ -139,9 +139,9 @@ AI red teaming adapts military and cybersecurity red team concepts to the unique
 Recent security incidents demonstrate that AI systems face unique challenges traditional cybersecurity cannot address:
 
 **2025–2026 Security Incidents:**
-- **January 2026**: The OpenClaw agent framework was reported to ship with a large batch of vulnerabilities, including a critical one-click remote code execution flaw; within weeks thousands of instances were exposed leaking API keys, and malicious plugins (credential stealers disguised as trading bots) reached its skills marketplace.
+- **January 2026**: The OpenClaw agent framework (135k+ stars in weeks) was hit by 100+ CVEs — including a one-click RCE via auth-token theft (CVE-2026-25253, CVSS 8.8). By spring 2026, 135,000+ instances were internet-exposed (most unauthenticated), and ~335 malicious plugins reached its ClawHub marketplace (~12% of the registry).
 - **September 2025**: Anthropic detected and disrupted the first documented large-scale cyberattack predominantly executed by an AI agent — a state-sponsored operation in which Claude Code autonomously handled an estimated 80–90% of tactical execution across ~30 global targets.
-- **August 2025**: GitHub Copilot remote code execution (CVE-2025-53773, CVSS 9.6) via prompt injection that wrote to the agent's configuration files.
+- **August 2025**: GitHub Copilot remote code execution (CVE-2025-53773, CVSS 7.8) via prompt injection that wrote to the agent's configuration files (enabling VS Code "YOLO mode").
 - **2025**: Prompt-injection research demonstrated against AI-enabled browsers (Perplexity's Comet, Gemini for Chrome) and coding assistants (GitLab Duo, Copilot Chat).
 - **2023–2024 (historical)**: Samsung's ChatGPT data leak, the March 2025 ChatGPT exploit, and the Microsoft health-chatbot data exposure remain instructive early examples (see [Real-World Case Studies](#real-world-case-studies)).
 
@@ -937,7 +937,7 @@ A man-in-the-middle (or a malicious orchestrator) rewrites tool arguments or ret
 - **Controls:** Authenticate and integrity-check tool channels (mTLS); label tool output as data, never instructions; quarantine tool responses through output policy.
 
 ### Attack 4: Credential Theft via MCP Config
-MCP server configs commonly hold API keys and tokens. Exposed instances leak them (as the OpenClaw incident showed — thousands of instances leaking keys within weeks).
+MCP server configs commonly hold API keys and tokens. Exposed instances leak them (as the OpenClaw incident showed — 135,000+ internet-exposed instances, most unauthenticated).
 - **Test:** Scan for exposed MCP endpoints, world-readable config, and secrets passed as plaintext env/args; attempt to coerce a tool into echoing its own credentials.
 - **Controls:** Short-lived scoped tokens per tool/action; secret managers, not config files; never expose MCP servers to untrusted networks.
 
@@ -1150,7 +1150,7 @@ python -m garak --probes dan,encoding --model_name mymodel
 
 #### 4. **promptfoo - LLM Red Teaming & Evaluation**
 
-*MIT-licensed. The **Hydra** strategy adds multi-turn, adaptive agentic campaigns. Best default for CI/CD-integrated application security testing.*
+*Acquired by OpenAI (announced March 2026; deal terms not disclosed) and remaining open source under its current license. The **Hydra** strategy adds multi-turn, adaptive agentic campaigns. Best default for CI/CD-integrated application security testing.*
 
 ```bash
 # Installation
@@ -1346,7 +1346,7 @@ cd redamon
 
 #### 11. **AI-Infra-Guard - Tencent Zhuque Lab**
 
-Full-stack AI red teaming platform that unifies several scanners: OpenClaw/agent security scanning, MCP-server and skills scanning, AI-infrastructure fingerprinting (100+ components matched against 1,600+ known vulnerabilities), and LLM jailbreak evaluation. Web UI and REST API, Docker-based deployment. A strong fit for the agentic/MCP attack surface covered throughout this guide.
+Full-stack AI red teaming platform that unifies several scanners: OpenClaw/agent security scanning, MCP-server and skills scanning, AI-infrastructure fingerprinting (100+ components matched against 1,900+ known CVEs), and LLM jailbreak evaluation. Web UI and REST API, Docker-based deployment. A strong fit for the agentic/MCP attack surface covered throughout this guide.
 
 ```bash
 # Installation (Docker)
@@ -1367,13 +1367,13 @@ docker-compose -f docker-compose.images.yml up -d
 
 **License:** Apache-2.0
 
-**GitHub:** [Tencent/AI-Infra-Guard](https://github.com/Tencent/AI-Infra-Guard) *(unvalidated — confirm before relying on details)*
+**GitHub:** [Tencent/AI-Infra-Guard](https://github.com/Tencent/AI-Infra-Guard) *(validated 2026-07)*
 
 ---
 
 #### 12. **Humanbound**
 
-Open-source AI-agent red-team engine, SDK, and CLI focused on autonomous/agentic systems. Produces a security posture score (0–100, A–F grades) and HTML reports, and can generate guardrail rules for runtime protection. Runs fully offline via Ollama for air-gapped testing, or against hosted providers.
+Open-source adversarial testing engine, SDK, and CLI for AI agents — attacks agents the way real users and attackers do (live endpoints, multi-turn conversations, tool abuse), then turns each failure into a firewall rule. Produces a security posture score (0–100, A–F grades via `hb posture`) and HTML reports (`hb report`). Runs fully offline via Ollama for air-gapped testing, or against hosted providers.
 
 ```bash
 # Installation
@@ -1386,13 +1386,13 @@ pip install humanbound[firewall]  # add firewall runtime
 - CLI and Python SDK over the same engine
 - Posture scoring (0–100 / A–F) with HTML reports
 - Offline/air-gapped testing via Ollama; also OpenAI, Anthropic, Gemini
-- Optional guardrail-rule generation for runtime defense
+- Turns test failures into firewall/guardrail rules for runtime defense
 
 **Best For:** Developer/DevSecOps testing of agentic systems, air-gapped assessments
 
 **License:** Apache-2.0
 
-**GitHub:** [humanbound/humanbound](https://github.com/humanbound/humanbound) *(unvalidated — confirm before relying on details)*
+**GitHub:** [humanbound/humanbound](https://github.com/humanbound/humanbound) *(validated 2026-07)*
 
 ---
 
@@ -1512,21 +1512,21 @@ A state-sponsored group used an agent to autonomously carry out an estimated **8
 
 #### Case Study B: OpenClaw Agent Framework Vulnerabilities (January 2026)
 
-**Context:** A rapidly-adopted open-source agent framework that reached hundreds of thousands of GitHub stars and spawned thousands of agents within days of launch.
+**Context:** A rapidly-adopted open-source agent framework (created by Peter Steinberger; also known as Moltbot) that passed **135,000+ GitHub stars within weeks** of launch.
 
 **Attack Vectors:** Agentic supply chain (ASI04), one-click RCE, credential exposure.
 
 **What happened:**
-Security researchers reported a large batch of vulnerabilities — including a critical one-click remote code execution via WebSocket hijacking. Within the first weeks, thousands of publicly-reachable instances were found exposing API keys/credentials, and malicious plugins (credential stealers disguised as trading bots) reached the framework's skills marketplace.
+Security researchers catalogued **100+ CVEs** across the framework (collectively dubbed the "Claw Chain"). The headline flaw, **CVE-2026-25253 (CVSS 8.8)**, is a one-click RCE: the OpenClaw Control UI trusts a `gatewayUrl` URL parameter and auto-connects to it, so a single malicious link makes the UI connect to an attacker's WebSocket and leak the user's authentication token in milliseconds — leading to host compromise. By April 2026, **more than 135,000 instances were exposed on the internet (a majority with no authentication)**, and roughly **335 malicious plugins** (credential stealers disguised as crypto-wallet tools, e.g. "solana-wallet-tracker") reached the ClawHub marketplace — about **12% of the registry**.
 
-**Impact:** Critical — a cautionary tale for agentic supply-chain risk: a trusted framework + an open plugin marketplace + insecure defaults.
+**Impact:** Critical — the defining cautionary tale for agentic supply-chain risk: a trusted framework + an open plugin marketplace + insecure defaults. Patched in v2026.1.29 (Jan 30, 2026); mitigation requires updating **and** rotating all auth tokens.
 
 **Lessons for red teams:**
 - Treat the plugin/tool marketplace as hostile by default (see [MCP & Tool-Protocol Security](#mcp--tool-protocol-security)).
 - Scan for exposed agent instances and plaintext secrets in configs.
 - Pin and review plugins; never auto-trust marketplace content.
 
-**Evidence quality:** Evidence-backed (security audit reporting). **Confidence:** Medium.
+**Evidence quality:** Evidence-backed (multiple vendor disclosures + CVE records + academic analysis). **Confidence:** High.
 
 ---
 
@@ -1534,7 +1534,7 @@ Security researchers reported a large batch of vulnerabilities — including a c
 
 **Context:** AI coding assistant integrated into developer workflows.
 
-**Attack Vector:** Prompt injection escalating to remote code execution (**CVE-2025-53773, CVSS 9.6**).
+**Attack Vector:** Prompt injection escalating to remote code execution (**CVE-2025-53773, CVSS 7.8**).
 
 **What happened:**
 Researchers showed that injected content could cause the assistant to write to its own configuration files, achieving RCE. Separately, a **second-order prompt injection** pattern emerged: feeding a *low-privilege* agent a malformed request tricked it into asking a *higher-privilege* agent to perform the action on its behalf — a confused-deputy escalation across agents (ASI07).
